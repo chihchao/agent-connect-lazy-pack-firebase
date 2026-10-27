@@ -6,7 +6,7 @@
 #    A Firebase/Google Cloud project ID is unique across ALL of GCP,
 #    not just inside your own account, and once used it stays reserved
 #    (even after the project is deleted, it cannot be reused for a
-#    while). When many teachers pick the same short id (wang, hello,
+#    while). When many users pick the same short id (wang, hello,
 #    test...), the first one to create it grabs it and everyone else
 #    fails with:
 #      Error: Project ID 'hello' is already in use. Please try a

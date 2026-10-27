@@ -2,7 +2,7 @@
 
 > 給 Agent 讀的程序。適用 OpenAI Codex 桌面 App、Google Antigravity 2、OpenCode 桌面版 2.x,**三個平台的指令完全一樣**;其他 Agent(Claude Code、Gemini CLI 等)也可照做。
 > 使用者只會說一句:「照 AGENTS.md 幫我連接 Firebase」。
-> 全程使用**繁體中文**回覆使用者,語氣像帶國中老師操作:一次只講一件事、講清楚要按哪裡。
+> 全程使用**繁體中文**回覆使用者,語氣像帶一般使用者操作:一次只講一件事、講清楚要按哪裡,不要用術語。
 > 本程序**不需要任何 MCP、不需要任何服務帳戶金鑰**:只需要用使用者的 Google 帳號,透過 `firebase-tools`(Firebase 官方 CLI,透過 `npx` 免安裝)OAuth 登入一次即可。
 > 本程序**只接三項服務:Firestore、Authentication、Hosting**,全部在免費方案(Spark)完成,**刻意不碰 Cloud Storage**(見下方「安全規則」第 4 點)。
 
@@ -30,7 +30,7 @@
 
 ## 瀏覽器原則:內建瀏覽器優先,系統瀏覽器備援
 
-研習要讓每位老師在**相同條件**下操作,所以登入、授權、驗收都**優先在 Agent 的內建瀏覽器**完成:它隨 App 安裝、版本一致,你也看得到畫面、能一步步帶。
+為了讓每個人在**相同條件**下操作,所以登入、授權、驗收都**優先在 Agent 的內建瀏覽器**完成:它隨 App 安裝、版本一致,你也看得到畫面、能一步步帶。
 
 | 平台 | 內建瀏覽器 | 怎麼打開網址 |
 |---|---|---|
@@ -69,7 +69,7 @@
 
 然後**不要問使用者要專案名稱**。專案 ID 會在第 3 步授權完成後,由 `scripts/new-nickname.*` 從他的 Google 帳號 Email 自動產生(見第 3.5 步)。
 
-**為什麼不手動取名**:Google Cloud 的**專案 ID 是全世界 GCP 帳號共用的資源、一旦用掉就永久保留**,不是只在你自己帳號內唯一。所有老師都取 `wang`、`hello`、`test` 這種簡稱時,先建立的人會佔走名字,後面的人就會看到:
+**為什麼不手動取名**:Google Cloud 的**專案 ID 是全世界 GCP 帳號共用的資源、一旦用掉就永久保留**,不是只在你自己帳號內唯一。如果大家都取 `wang`、`hello`、`test` 這種簡稱,先建立的人會佔走名字,後面的人就會看到:
 
 ```
 Error: Project ID 'hello' is already in use. Please try a unique Project ID.
@@ -143,9 +143,9 @@ Error: Project ID 'hello' is already in use. Please try a unique Project ID.
 
 - **只產生一次,然後記住它。** 後續每個步驟都用同一組 `<專案 ID>`,不要重新跑(重新跑會得到不同數字)。
 - 告訴使用者一行:「✅ 你的專案 ID 是 `<專案 ID>`,網址會是 `https://<專案 ID>.web.app`。」
-- 如果使用者主動想要某個特定名稱(例如教研活動共用的名字),改用 `-Seed <basename>`:
-  - Windows:`... -File scripts\new-nickname.ps1 -Seed teacher-lin`
-  - macOS／Linux:`bash scripts/new-nickname.sh -s teacher-lin`
+- 如果使用者主動想要某個特定名稱(例如多人活動共用的名字),改用 `-Seed <basename>`:
+  - Windows:`... -File scripts\new-nickname.ps1 -Seed user-lin`
+  - macOS／Linux:`bash scripts/new-nickname.sh -s user-lin`
   - **注意:`-Seed` 一樣會加隨機數字尾碼**,不要直接拿未加工的字串去當專案 ID。
 - 想確認某個名稱合不合法(只有小寫英文／數字／連字號、開頭是英文字母、結尾是英文或數字、6～30 字元,這是 Google Cloud 專案 ID 的規則)時:
   - Windows:`... -File scripts\new-nickname.ps1 -Check abc-1234`
@@ -258,7 +258,7 @@ npx -y firebase-tools deploy --only firestore,hosting --project <專案 ID> --no
 3. 頁面顯示「✅ 連線成功(已寫入並讀回第 N 筆)」→ 完成。顯示錯誤 → 依頁面上的建議處理:
    - 「權限不足／Missing or insufficient permissions」→ 多半是第 7 步的 Firestore 規則還沒部署,或第 6 步的登入方式還沒開通成功,回第 6、7 步重跑。
    - 「找不到 Firebase 設定／apiKey 無效」→ 回第 4 步第 5 點,確認 `public/firebase-config.js` 已經寫入真實值並重新部署(第 7 步)。
-   - 「超過免費額度」→ Spark 方案的每日用量在 UTC 0 點(台灣早上 8 點)重置,研習測試完全用不到上限。
+   - 「超過免費額度」→ Spark 方案的每日用量在 UTC 0 點(台灣早上 8 點)重置,一般使用完全用不到上限。
 
 ## 第 9 步:輸出「連接完成卡」
 
