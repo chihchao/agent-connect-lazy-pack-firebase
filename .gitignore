@@ -4,4 +4,25 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 hello/firebase-sdk-config.json
+
+# macOS
 .DS_Store
+.AppleDouble
+.AppleDB
+.AppleDesktop
+Icon?
+._*
+
+# Windows
+desktop.ini
+Thumbs.db
+
+# Google Drive for Desktop sync artifacts
+*.tmp.driveupload
+*.tmp.drivedownload
+*.gdoc
+*.gsheet
+*.gslides
+* (衝突的副本 *)*
+* (Conflicted copy *)*
+*的副本*
